@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="dolores",
-    version="0.1.3",
+    version="0.1.4",
     author="Dolores Abernathy",
     author_email="malcolmcyber@gmail.com",
     description="Dolores is an python package that provides direct access to GPT-3 via dolores class instance. Instantiate dolores with your API key to create dolores with the proper configurations required to make requests to the OpenAI API.",
