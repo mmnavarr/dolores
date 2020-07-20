@@ -1,6 +1,6 @@
-# Dolores
+# Dolores 🤖⚡
 
-## Dolores is an python package that provides direct access to GPT-3 via dolores class instance. Instantiate dolores with your API key to create dolores with the proper configurations required to make requests to the OpenAI API.
+Dolores is an python package that provides direct access to GPT-3 via dolores class instance. Instantiate dolores with your API key to create dolores with the proper configurations required to make requests to the OpenAI API.
 
 
 ## Installation (PyPi Package)
@@ -9,11 +9,13 @@ $ pip install dolores
 ```
 
 ## Usage
-Open up the python interpreter in the root of the project and execute the following:
+Either do so in the python interpreter or in a python file.
 
 ```
->>> from dolores import Dolores
->>> dolores = Dolores("<your_api_key_goes_here>", "<open_ai_engine_goes_here>")
+from dolores import Dolores
+
+# dolores = Dolores("<your_api_key_goes_here>", "<engine_name_goes_here>")
+# dolores = Dolores("<XXX-YYY-ZZZ>", "davinci")
 ```
 
 From there you may not call openai's API directly via the accessible methods in the Dolores class instance. The following out call the list engines API call. Each API call has an associated method call that can be used to call the API.
@@ -22,20 +24,21 @@ From there you may not call openai's API directly via the accessible methods in 
 ### List Engines GET
 Lists the currently available engines, and provides basic information about each option such as the owner and availability.
 ```
->>> dolores.list_engines()
+dolores.list_engines()
 ```
 
 ### Retrieve Engine GET
 Retrieves an engine instance, providing basic information about the engine such as the owner and availability.
 ```
->>> dolores.retrieve_engine()
+dolores.retrieve_engine()
 ```
 
 ### Changing Engines
 After instantiating the Dolores class, subsequent class to the Open AI API will be made under the same engine selection. In order to change the engine used for the API call there is an exposed method.
 
+
 ```
->>> dolores.set_engine("<new_engine_type>")
+dolores.set_engine("davinci")
 ```
 
 Note: Validation against the existing engine types is in consideration for future versions.
@@ -43,14 +46,14 @@ Note: Validation against the existing engine types is in consideration for futur
 ### Create Completion POST (!important)
 Create a completion. This is the main endpoint of the API. Returns new text as well as, if requested, the probabilities over each alternative token at each position.
 ```
->>> payload = {
+payload = {
        "prompt": "Once upon a time",
        "max_tokens": 5,
        "temperature": 1,
        "top_p": 1,
        "n": 1
     }
->>> dolores.create_completion(payload)
+dolores.create_completion(payload)
 ```
 
 #### Request Payload Schema
