@@ -1,0 +1,5 @@
+/dist
+/build
+/dolores.egg-info
+
+/dolores/__pycache__
