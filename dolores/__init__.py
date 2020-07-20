@@ -1,3 +1,3 @@
 # __init__.py
 
-from . import dolores
+from .dolores import Dolores

@@ -39,14 +39,13 @@ class Dolores:
     url = f"https://api.openai.com/v1/engines/{self.engine}/completions"
     response = requests.post(url, headers=self.headers, data=payload)
 
-    breakpoint()
     return response.text
 
   # Search POST
   # Perform a semantic search over a list of documents.
   def search(self, payload):
     url = f"https://api.openai.com/v1/engines/{self.engine}/search"
-    response = requests.post(url, headers=self.headers, data=payload)
+    response = requests.post(url, headers=self.headers, data=str(payload))
 
     return response.text
 
