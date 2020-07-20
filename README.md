@@ -35,7 +35,7 @@ Retrieves an engine instance, providing basic information about the engine such 
 After instantiating the Dolores class, subsequent class to the Open AI API will be made under the same engine selection. In order to change the engine used for the API call there is an exposed method.
 
 ```
-$ dolores.set_engine("<new_engine_type>")
+>>> dolores.set_engine("<new_engine_type>")
 ```
 
 Note: Validation against the existing engine types is in consideration for future versions.
