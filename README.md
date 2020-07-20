@@ -95,5 +95,5 @@ $ python3 -m pip install --user --upgrade twine
 
 Once installed, run Twine to upload all of the archives under dist:
 ```
-python3 -m twine upload --repository pypi dist/*
+$ python3 -m twine upload --repository pypi dist/*
 ```
