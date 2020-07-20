@@ -21,6 +21,7 @@ class Dolores:
   def list_engines(self):
     url = "https://api.openai.com/v1/engines"
     response = requests.get(url, headers=self.headers)
+    print(response.text)
 
     return response.text
 
@@ -29,6 +30,7 @@ class Dolores:
   def retrieve_engine(self):
     url = f"https://api.openai.com/v1/engines/{self.engine}"
     response = requests.get(url, headers=self.headers)
+    print(response.text)
 
     return response.text
 
@@ -37,15 +39,17 @@ class Dolores:
   # Returns new text as well as, if requested, the probabilities over each alternative token at each position.
   def create_completion(self, payload):
     url = f"https://api.openai.com/v1/engines/{self.engine}/completions"
-    response = requests.post(url, headers=self.headers, data=payload)
+    response = requests.post(url, headers=self.headers, json=payload)
+    print(response.text)
 
-    return response.text
+    return response
 
   # Search POST
   # Perform a semantic search over a list of documents.
   def search(self, payload):
     url = f"https://api.openai.com/v1/engines/{self.engine}/search"
-    response = requests.post(url, headers=self.headers, data=str(payload))
+    response = requests.post(url, headers=self.headers, json=payload)
+    print(response.text)
 
     return response.text
 
