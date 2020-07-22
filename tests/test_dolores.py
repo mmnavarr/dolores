@@ -9,38 +9,33 @@ def test_dolores(api_key, engine):
   dolores.initialize(api_key, engine)
 
 
-  # Get module-scoped globals
+  # Get module-scoped globals & validate them
   dolores_api_key, dolores_engine, dolores_headers = dolores.get_globals()
-
-  # Assert
   assert(dolores_api_key == api_key)
   assert(dolores_engine == engine)
-  # TODO: Assert header
-
-  engines_json = dolores.list_engines()
-
-  breakpoint()
-
-  assert(any(engine.id == dolores_engine for engine in engines_json.data))
-
-  # TODO: Call the rest
-
-  pass
+  assert(dolores_headers["Content-Type"] == "application/json")
+  assert(dolores_headers["Authorization"] == f"Bearer {dolores_api_key}")
 
 
+  # Make API to get list of engine
+  engines_response = dolores.list_engines()
+
+  # Assert current module engine exists in response
+  assert(any(engine["id"] == dolores_engine for engine in engines_response["data"]))
 
 
+  # Make API to set a new engine and subsequently retrieve the engine
+  dolores_engine = "ada"
+  dolores.set_engine(dolores_engine)
+  engine_response = dolores.retrieve_engine()
 
-"""
-Example completion request payload
-{
-  "prompt": "Once upon a time",
-  "max_tokens": 5,
-  "temperature": 1,
-  "top_p": 1,
-  "n": 1,
-  "stream": false,
-  "logprobs": null,
-  "stop": "\n"
-}
-"""
+   # Assert current module engine matches retrieved engine
+  assert(engine_response["id"] == dolores_engine)
+
+
+  # Make API to complete test prompt
+  completion_response = dolores.create_completion("Once upon a time", 5, 1, 1, 1)
+  assert(type(completion_response) is dict)
+  assert(type(completion_response["id"]) is str)
+  assert(type(completion_response["choices"]) is list)
+  assert(type(completion_response["choices"][0]["text"]) is str)
