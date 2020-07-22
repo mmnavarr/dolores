@@ -3,7 +3,7 @@ import dolores
 # Arrange, Act, Assert
 
 def test_dolores(api_key, engine):
-  print("Testing Dolores Module ..")
+  print("\nBegin Testing Dolores Module ...\n")
 
   # Initialize dolores module
   dolores.initialize(api_key, engine)
@@ -39,3 +39,5 @@ def test_dolores(api_key, engine):
   assert(type(completion_response["id"]) is str)
   assert(type(completion_response["choices"]) is list)
   assert(type(completion_response["choices"][0]["text"]) is str)
+
+  print("\nFinish Testing Dolores Module\n")

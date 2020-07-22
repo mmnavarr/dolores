@@ -1,6 +1,6 @@
 # Dolores 🤖⚡
 
-Dolores is an python package that provides direct access to GPT-3 via dolores class instance. Instantiate dolores with your API key to create dolores with the proper configurations required to make requests to the OpenAI API.
+Dolores is a python package that wraps OpenAI's APIs and provides direct access to the GPT-3. By initializing dolores with your API key, all API requests can then simply be made via function calls.
 
 
 ## Installation (PyPi Package)
@@ -34,6 +34,8 @@ dolores.retrieve_engine()
 ```
 
 ### Changing Engines
+##### dolores.set_engine(engines)
+
 After instantiating the Dolores class, subsequent class to the Open AI API will be made under the same engine selection. In order to change the engine used for the API call there is an exposed method.
 
 
@@ -44,11 +46,21 @@ dolores.set_engine("davinci")
 Note: Validation against the existing engine types is in consideration for future versions.
 
 ### Create Completion POST (!important)
+##### dolores.create_completion(prompt, max_tokens=5, temperature=1, top_p=1, n=1):
+
 Create a completion. This is the main endpoint of the API. Returns new text as well as, if requested, the probabilities over each alternative token at each position.
+
+Request:
 ```
-# dolores.create_completion(prompt, max_tokens=5, temperature=1, top_p=1, n=1):
 dolores.create_completion("Is the JavaScript programming language better than python?")
 ```
+Response:
+```
+JSON: {'id': 'cmpl-kM6MK5dVRvD964MxeyG4AjCy', 'object': 'text_completion', 'created': 1595431739, 'model': 'ada:2020-05-03', 'choices': [{'text': ' in a far away place', 'index': 0, 'logprobs': None, 'finish_reason': 'length'}]}
+```
+
+`'in a far away place'` 😂
+
 
 #### Request Payload Schema
 
@@ -70,6 +82,11 @@ dolores.create_completion("Is the JavaScript programming language better than py
 Using pytest to test the dolores module can be done by executing the following in the root of the project:
 ```
 pytest tests/test_dolores.py --api_key "<api_key_goes_here" --engine "davinci"
+```
+
+If you would like to see the print statements that occur during testing just add the -s flag:
+```
+pytest -s tests/test_dolores.py --api_key "<api_key_goes_here" --engine "davinci"
 ```
 
 ### Generating Distribution Archives
