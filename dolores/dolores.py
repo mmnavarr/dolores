@@ -1,82 +1,109 @@
 import json
 import requests
 
-# Dolores - abstraction layer over openai's API
-class Dolores:
-
-  # Constructor
-  def __init__(self, api_key, engine="davinci"):
-    self.engine = engine
-    self.headers = {
-        "Content-Type": "application/json",
-        "Authorization": f"Bearer {api_key}"
-      }
-
-  # Change engine setting
-  def set_engine(self, engine):
-    self.engine = engine
-
-  # List Engines GET
-  # Lists the currently available engines, and provides basic information about each option such as the owner and availability.
-  def list_engines(self):
-    url = "https://api.openai.com/v1/engines"
-    response = requests.get(url, headers=self.headers)
-    print(response.text)
-
-    return response.text
-
-  # Retrieve Engine GET
-  # Retrieves an engine instance, providing basic information about the engine such as the owner and availability.
-  def retrieve_engine(self):
-    url = f"https://api.openai.com/v1/engines/{self.engine}"
-    response = requests.get(url, headers=self.headers)
-    print(response.text)
-
-    return response.text
-
-  # Create Completion POST
-  # Create a completion. This is the main endpoint of the API.
-  # Returns new text as well as, if requested, the probabilities over each alternative token at each position.
-  def create_completion(self, payload):
-    url = f"https://api.openai.com/v1/engines/{self.engine}/completions"
-    response = requests.post(url, headers=self.headers, json=payload)
-    print(response.text)
-
-    return response
-
-  # Search POST
-  # Perform a semantic search over a list of documents.
-  def search(self, payload):
-    url = f"https://api.openai.com/v1/engines/{self.engine}/search"
-    response = requests.post(url, headers=self.headers, json=payload)
-    print(response.text)
-
-    return response.text
-
-  # Test function to confirm it works
-  def test_create_completion(self):
-    payload = {
-      "prompt": "Once upon a time",
-      "max_tokens": 5,
-      "temperature": 1,
-      "top_p": 1,
-      "n": 1
-    }
-
-    self.create_completion(payload)
+# #                                             #   #
+#   Dolores - abstraction module over openai's API  #
+# #                                             #   #
 
 
+# Defile module-scoped variables
+engine = ""
+api_key = ""
+headers = {}
 
-"""
-Example completion request payload
-{
-  "prompt": "Once upon a time",
-  "max_tokens": 5,
-  "temperature": 1,
-  "top_p": 1,
-  "n": 1,
-  "stream": false,
-  "logprobs": null,
-  "stop": "\n"
-}
-"""
+
+# Initialize module
+def initialize(_api_key, _engine="davinci"):
+  global api_key, engine, headers
+
+  if _api_key:
+    api_key = _api_key
+    engine = _engine
+  else:
+    print("No API Key provided. Initialization failed.")
+    return
+
+  headers = {
+    "Content-Type": "application/json",
+    "Authorization": f"Bearer {_api_key}"
+  }
+
+# Get module-scoped values
+def get_globals():
+  global api_key, engine, headers
+
+  return api_key, engine, headers
+
+# Change engine setting
+def set_engine(_engine):
+  global engine
+  engine = _engine
+
+# List Engines GET
+# Lists the currently available engines, and provides basic information about each option such as the owner and availability.
+def list_engines():
+  global headers
+
+  url = "https://api.openai.com/v1/engines"
+  response = requests.get(url, headers=headers)
+
+  if response.ok:
+    print(f"JSON: {response.json()}")
+    return response.json()
+  else:
+    return response.raise_for_status()
+
+# Retrieve Engine GET
+# Retrieves an engine instance, providing basic information about the engine such as the owner and availability.
+def retrieve_engine():
+  global headers
+
+  url = f"https://api.openai.com/v1/engines/{engine}"
+  response = requests.get(url, headers=headers)
+
+  if response.ok:
+    print(f"JSON: {response.json()}")
+    return response.json()
+  else:
+    return response.raise_for_status()
+
+# Create Completion POST
+# Returns new text as well as, if requested, the probabilities over each alternative token at each position.
+def create_completion(prompt, max_tokens=5, temperature=1, top_p=1, n=1):
+  global headers
+
+  # Create payload for API Request
+  payload = {
+    "prompt": prompt,
+    "max_tokens": max_tokens,
+    "temperature": temperature,
+    "top_p": top_p,
+    "n": n
+  }
+
+  url = f"https://api.openai.com/v1/engines/{engine}/completions"
+  response = requests.post(url, headers=headers, json=payload)
+
+  if response.ok:
+    print(f"JSON: {response.json()}")
+    return response.json()
+  else:
+    return response.raise_for_status()
+
+# Search POST
+# Perform a semantic search over a list of documents.
+def search(payload):
+  global headers
+
+  url = f"https://api.openai.com/v1/engines/{engine}/search"
+  response = requests.post(url, headers=headers, json=payload)
+
+  if response.ok:
+    print(f"JSON: {response.json()}")
+    return response.json()
+  else:
+    return response.raise_for_status()
+
+# Test function to confirm it works
+def test_create_completion():
+  create_completion("Once upon a time", 5, 1, 1, 1)

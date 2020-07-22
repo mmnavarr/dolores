@@ -14,8 +14,8 @@ Either do so in the python interpreter or in a python file.
 ```
 from dolores import Dolores
 
-# dolores = Dolores("<your_api_key_goes_here>", "<engine_name_goes_here>")
-# dolores = Dolores("<XXX-YYY-ZZZ>", "davinci")
+# dolores.initialize("<your_api_key_goes_here>", "<engine_name_goes_here>")
+# dolores.initialize"<XXX-YYY-ZZZ>", "davinci")
 ```
 
 From there you may not call openai's API directly via the accessible methods in the Dolores class instance. The following out call the list engines API call. Each API call has an associated method call that can be used to call the API.
