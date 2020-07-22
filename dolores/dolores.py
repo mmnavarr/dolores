@@ -56,7 +56,7 @@ def list_engines():
 # Retrieve Engine GET
 # Retrieves an engine instance, providing basic information about the engine such as the owner and availability.
 def retrieve_engine():
-  global headers
+  global engine, headers
 
   url = f"https://api.openai.com/v1/engines/{engine}"
   response = requests.get(url, headers=headers)
@@ -70,7 +70,7 @@ def retrieve_engine():
 # Create Completion POST
 # Returns new text as well as, if requested, the probabilities over each alternative token at each position.
 def create_completion(prompt, max_tokens=5, temperature=1, top_p=1, n=1):
-  global headers
+  global engine, headers
 
   # Create payload for API Request
   payload = {
@@ -93,7 +93,7 @@ def create_completion(prompt, max_tokens=5, temperature=1, top_p=1, n=1):
 # Search POST
 # Perform a semantic search over a list of documents.
 def search(payload):
-  global headers
+  global engine, headers
 
   url = f"https://api.openai.com/v1/engines/{engine}/search"
   response = requests.post(url, headers=headers, json=payload)
@@ -103,7 +103,3 @@ def search(payload):
     return response.json()
   else:
     return response.raise_for_status()
-
-# Test function to confirm it works
-def test_create_completion():
-  create_completion("Once upon a time", 5, 1, 1, 1)
