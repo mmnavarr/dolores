@@ -46,14 +46,8 @@ Note: Validation against the existing engine types is in consideration for futur
 ### Create Completion POST (!important)
 Create a completion. This is the main endpoint of the API. Returns new text as well as, if requested, the probabilities over each alternative token at each position.
 ```
-payload = {
-       "prompt": "Once upon a time",
-       "max_tokens": 5,
-       "temperature": 1,
-       "top_p": 1,
-       "n": 1
-    }
-dolores.create_completion(payload)
+# dolores.create_completion(prompt, max_tokens=5, temperature=1, top_p=1, n=1):
+dolores.create_completion("Is the JavaScript programming language better than python?")
 ```
 
 #### Request Payload Schema
@@ -70,7 +64,14 @@ dolores.create_completion(payload)
 | logprobs 	| body 	| integer                   	| false    	| Include the log probabilites on the logprobs most likely tokens. So for example, if logprobs is 10, the API will return a list of the 10 most likely tokens. If logprobs is supplied, the API will always return the logprob of the sampled token, so there may be up to logprobs+1 elements in the response. 	|
 | stop     	| body 	| string or list of strings 	| false    	| One or more sequences where the API will stop generating further tokens. The returned text will not contain the stop sequence.                                                                                                                                                                                	|
 
+
 ## Internal Contributor Notes (Dev Only)
+### Testing
+Using pytest to test the dolores module can be done by executing the following in the root of the project:
+```
+pytest tests/test_dolores.py --api_key "<api_key_goes_here" --engine "davinci"
+```
+
 ### Generating Distribution Archives
 In order to update the package, a new distribution must be made for the package. These are archives that are uploaded to the Package Index and can be installed by pip.
 
