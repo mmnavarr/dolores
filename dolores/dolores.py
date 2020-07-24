@@ -51,7 +51,7 @@ def list_engines():
     print(f"JSON: {response.json()}")
     return response.json()
   else:
-    return response.raise_for_status()
+    response.raise_for_status()
 
 # Retrieve Engine GET
 # Retrieves an engine instance, providing basic information about the engine such as the owner and availability.
@@ -65,7 +65,7 @@ def retrieve_engine():
     print(f"JSON: {response.json()}")
     return response.json()
   else:
-    return response.raise_for_status()
+    response.raise_for_status()
 
 # Create Completion POST
 # Returns new text as well as, if requested, the probabilities over each alternative token at each position.
@@ -88,7 +88,7 @@ def create_completion(prompt, max_tokens=5, temperature=1, top_p=1, n=1):
     print(f"JSON: {response.json()}")
     return response.json()
   else:
-    return response.raise_for_status()
+    response.raise_for_status()
 
 # Search POST
 # Perform a semantic search over a list of documents.
@@ -102,4 +102,4 @@ def search(payload):
     print(f"JSON: {response.json()}")
     return response.json()
   else:
-    return response.raise_for_status()
+    response.raise_for_status()
